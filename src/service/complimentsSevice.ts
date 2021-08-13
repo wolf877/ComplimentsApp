@@ -3,6 +3,7 @@ import {UsersRepositories} from "../repositories/UsersRepositories"
 import {ComplimentsRepositories} from "../repositories/ComplimentsRepositories"
 
 import{FindTag} from "./serviceForTags"
+import { sendEmailCompliments } from "./emailSenderCompliments";
 
 interface ICompliment{
     tag: string;
@@ -19,10 +20,19 @@ class ComplimentsSevice{
         const userRepository = getCustomRepository(UsersRepositories)
 
         const findTag = new FindTag();
+        const confirmEmail = new sendEmailCompliments();
         //console.log(email_receiver)
+        const sender = async ()=>{
+            const { name } = await userRepository.findOne({
+                id: User_sender
+            })
+            //console.log(name)
+            const name_sender = name
+            return name_sender
+        }
 
         try{
-        const { id } = await userRepository.findOne({
+        const {name, id } = await userRepository.findOne({
             email: email_receiver
         });
 
@@ -52,7 +62,10 @@ class ComplimentsSevice{
 
         await complimentRepository.save(compliment)
 
+        const name_sender = await sender();
+        //console.log(name_sender)
         
+        confirmEmail.execute(email_receiver, name, name_sender)
 
         return compliment}catch(err){
             throw new Error("User receiver not exists")
