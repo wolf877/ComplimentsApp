@@ -51,7 +51,7 @@ class ComplimentsSevice{
 
         const tag_id = await findTag.execute(tag)
         
-        console.log(tag_id)
+        //console.log(tag_id)
 
         let compliment = complimentRepository.create({
             tag_id,
