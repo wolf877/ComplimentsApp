@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(router);
 // inicializar o servidor
-app.listen(3000, ()=> console.log('Serve active'));
+app.listen(3000, () => console.log('Serve active'));
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction)=>{
     if(err instanceof Error){

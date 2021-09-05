@@ -3,6 +3,8 @@ import {UsersRepositories} from "../repositories/UsersRepositories"
 import { compare } from "bcryptjs"
 import {sign} from "jsonwebtoken"
 
+//import { LocalStorage } from "node-localstorage";
+
 interface IAuthenticationRequest{
     email: string;
     password: string;
@@ -30,6 +32,9 @@ class AuthenticationService{
             subject: user.id,
             expiresIn: "1d",
         })
+        //localStorage = new LocalStorage('./scratch');
+
+        //localStorage.setItem("saved", token);
 
         return token;
     }
